@@ -1,0 +1,10 @@
+{
+  "curios.identifier.charm2": "Charm",
+  "item.crimsonxp.xp_charm": "§aXP Charm",
+  "item.crimsonxp.xp_item": "§aXP Orb Cluster",
+
+  "tip.crimsonxp.xp_charm": "The Charm picks up nearby XP Orbs and converts them to XP Orb Clusters",
+  "tip.crimsonxp.xp_item": "XP Orbs are converted into XP Clusters",
+  "tip2.crimsonxp.xp_item": "Right Click to consume",
+  "container.crimsonxp.charm": "XP Charm"
+}
