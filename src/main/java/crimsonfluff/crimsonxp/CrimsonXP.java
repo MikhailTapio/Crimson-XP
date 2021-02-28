@@ -1,25 +1,29 @@
 package crimsonfluff.crimsonxp;
 
-import crimsonfluff.crimsonxp.containers.CharmScreen;
-import crimsonfluff.crimsonxp.init.containersInit;
 import crimsonfluff.crimsonxp.init.itemsInit;
 import crimsonfluff.crimsonxp.util.ConfigBuilder;
 import crimsonfluff.crimsonxp.util.Curios;
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.entity.item.ExperienceOrbEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.inventory.container.PlayerContainer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
@@ -37,18 +41,11 @@ public class CrimsonXP {
 
     public CrimsonXP() {
         MOD_EVENTBUS.addListener(this::enqueueIMC);
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> MOD_EVENTBUS.addListener(this::doClientStuff));
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIGURATION.COMMON);
         itemsInit.ITEMS.register(MOD_EVENTBUS);
-        containersInit.CONTAINERS.register(MOD_EVENTBUS);
 
         MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public void doClientStuff(final FMLClientSetupEvent event) {
-        ScreenManager.registerFactory(containersInit.GENERIC_CHEST.get(), CharmScreen::new);
     }
 
     @Mod.EventBusSubscriber(modid = CrimsonXP.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -71,6 +68,35 @@ public class CrimsonXP {
                             .size(1)
                             .build());
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onXpPickupEvent(PlayerXpEvent.PickupXp event) {
+        ExperienceOrbEntity xpOrb = event.getOrb();
+
+    // Check ALL inventory + Curios to see if wearing XP_CHARM
+    // if TRUE then add xp into Charm
+        ItemStack CHARM = ItemStack.EMPTY;
+        if (Curios.isModLoaded()) CHARM = Curios.findItem(itemsInit.XP_CHARM_ITEM.get(), event.getPlayer());
+
+        if (CHARM == ItemStack.EMPTY) {
+            for(int a=0; a<event.getPlayer().inventory.getSizeInventory(); a++) {
+                CHARM = event.getPlayer().inventory.getStackInSlot(a);
+                if (CHARM.getItem() == itemsInit.XP_CHARM_ITEM.get()) break;
+            }
+        }
+
+        if (CHARM.getItem() == itemsInit.XP_CHARM_ITEM.get()) {
+            if (CHARM.getOrCreateTag().getBoolean("active")) {
+                CHARM.getOrCreateTag().putInt("xp", CHARM.getOrCreateTag().getInt("xp") + xpOrb.getXpValue());
+                event.getPlayer().world.playSound(null, event.getPlayer().getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1f, 1f);
+
+                xpOrb.remove();
+                event.setCanceled(true);
+
+                //CrimsonXP.LOGGER.info("PICKUP: FOUND CHARM");
             }
         }
     }

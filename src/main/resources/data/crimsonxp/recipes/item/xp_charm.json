@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "##",
+        "#C"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:emerald"
+        },
+        "C": {
+            "item": "minecraft:chest"
+        }
+    },
+    "result": {
+        "item": "crimsonxp:xp_charm",
+        "count": 1
+    }
+}

@@ -1,10 +1,11 @@
 {
   "curios.identifier.charm2": "Charm",
   "item.crimsonxp.xp_charm": "§aXP Charm",
-  "item.crimsonxp.xp_item": "§aXP Orb Cluster",
 
-  "tip.crimsonxp.xp_charm": "The Charm picks up nearby XP Orbs and converts them to XP Orb Clusters",
-  "tip.crimsonxp.xp_item": "XP Orbs are converted into XP Clusters",
-  "tip2.crimsonxp.xp_item": "Right Click to consume",
+  "tip.crimsonxp.xp_charm": "The Charm picks up nearby XP Orbs",
+  "tip1.crimsonxp.xp_charm": "When Empty Shift Right Click to store ALL player experience",
+  "tip2.crimsonxp.xp_charm": "Shift Right Click to pull 64 xp from Charm",
+  "shift.crimsonxp.xp_charm": "Press §bSHIFT§r for more",
+
   "container.crimsonxp.charm": "XP Charm"
 }

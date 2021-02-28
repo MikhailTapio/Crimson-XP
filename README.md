@@ -1,6 +1,4 @@
-# Crimson-Magnet
- 
-My Third Public Mod
+# Crimson-XP-Charm
 
 Built with Minecraft 1.16.4, Forge 35.0.15, IntelliJ
 
@@ -12,4 +10,4 @@ Questions, comments and advice is greatly welcome, but speak slow, I am a new
 
 I best learn by example, so any simple code snippets are greatly welcome
 
-"Attraction is in the eye of the beholder"
+"Experienced in the art of attraction"

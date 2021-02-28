@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "crimsonxp:xp_charm"
+        }
+    ],
+    "result": {
+        "item": "crimsonxp:xp_charm",
+        "count": 1
+    }
+}
