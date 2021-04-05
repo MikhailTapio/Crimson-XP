@@ -1,0 +1,11 @@
+{
+  "curios.identifier.charm2": "护符",
+  "item.crimsonxp.xp_charm": "§a经验护符",
+
+  "tip.crimsonxp.xp_charm": "这个护符可以收集并储存附近的经验球",
+  "tip1.crimsonxp.xp_charm": "潜行状态下手持空护符并右键可以将所有玩家经验转存到护符中",
+  "tip2.crimsonxp.xp_charm": "潜行状态下手持护符右键可以向玩家经验槽转入64点经验",
+  "shift.crimsonxp.xp_charm": "按下 §bSHIFT§r 查看详情",
+
+  "container.crimsonxp.charm": "深红经验护符"
+}
